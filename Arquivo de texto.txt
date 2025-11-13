@@ -1,0 +1,2 @@
+Este e um arquivo de texto para novo projeto.
+Certo, porem quero ler um arquivo de texto, porem toda vez que for le este ele pode estar maior ou menor, exemplo um documento que precisa ser editado, feito anotacoes, entao o mesmo ira variar de tamanho.
