@@ -39,7 +39,7 @@
 
 ## Projetos em Destaque.
 
-### Conversor Conversor de Dados (RLE), aprendizagem e pratica.
+### Conversor de Dados (RLE), aprendizagem e pratica.
 
 
 
