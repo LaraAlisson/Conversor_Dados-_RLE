@@ -37,7 +37,7 @@ int main(){
     fclose(fp);
 
     printf("Tamanho lido: %ld bytes\n", file_size);
-    printf("Conteúdo: \n%s\n", p_str);
+    printf("Conteudo: \n%s\n", p_str);
 
     // 5. Liberar memória
     free(p_str);
