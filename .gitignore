@@ -1,0 +1,21 @@
+# Arquivo .gitignore
+
+# 1. Ignorar Executável (main.exe)
+# O executável está dentro da subpasta 'src'
+main.exe
+main
+Arquivo de texto.txt
+
+
+
+# 3. Tipos de arquivos de compilação de C/C++ comuns
+# (Essenciais para C, caso seu compilador gere arquivos objeto (.o))
+*.o
+*.out
+
+# 4. Pasta de configuração do VS Code (Boa prática)
+.vscode/
+
+# 5. Outros arquivos comuns de sistema ou temporários
+*.tmp
+*~
