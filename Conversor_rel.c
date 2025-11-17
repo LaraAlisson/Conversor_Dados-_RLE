@@ -62,7 +62,7 @@ int main(){
     /*Função para obter o tamanho do arquivo compactado*/
     int i = 0,
         j = 0,
-        y = 1;
+    count = 1;
 
 
     
@@ -78,27 +78,22 @@ int main(){
      while(str[j] != '\0'){
 
         if(str[j] == str[j+1]){
-            printf("\n caracter repedido \n");
-            y += 1;
+            count += 1;
         }else{
-            if(y > 1){
-                printf("\n caracter repedido adicionado \n");
-                str_compactado[i] = y + '0';
-                str_compactado[i+1]= str[j-1];
+            if(count > 1){
+                str_compactado[i] = count + '0';
+                str_compactado[i+1]= str[j];
                 i += 2;
-                y = 1;
+                count = 1;
                 j++;
             }
             str_compactado[i] = '1';
             str_compactado[i+1]= str[j];
-            
-           // printf("%c",str_compactado[i]);
-          //  printf("%c",str_compactado[i+1]);
+
             i += 2;
         }
        
         j++;
-
      }
         
 
