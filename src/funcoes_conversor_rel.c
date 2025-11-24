@@ -6,66 +6,78 @@
 
 /*Function opening file*/
 FILE *open_file(const char *file_nome,const char *mode){
+   
     FILE *fp;
-
-    if((fp = fopen(file_nome,mode)) == NULL){
-    perror("ERRO: Falha ao abrir o arquvio");
-    exit(EXIT_FAILURE);
-   }
-
-   return fp;
+    fp = fopen(file_nome,mode);
+    return fp;
 }
 
 
 long read_file_size(FILE *fp){
-    /*Posiciona o ponteiro no final do arquivo para ler o tamnanho*/
+    /*Posiciona o ponteiro no final do arquivo para ler o tamananho*/
     fseek(fp, 0 ,SEEK_END);/**/
     long  tamanho_arquivo = ftell(fp);
 
     /*Posiciona o ponteiro no inicio do arquivo*/
     fseek(fp,0,SEEK_SET);
 
-     // CORREÇÃO DE SEGURANÇA: Se o arquivo estiver vazio
-    if(tamanho_arquivo <= 0){
-        perror("ERRO: Erro ao ler o arquivo.");
-        fclose(fp);
-        exit(EXIT_FAILURE);
-    }
-
     return tamanho_arquivo;
 }
 
-void read_file(char *str, long len, FILE *fp){
 
-    size_t  lidos = fread(str,1,len,fp);
+int read_file(unsigned char *buffer, long len, FILE *fp){
 
-    /*finalizar a string com o \0 no final*/
-    str[lidos] = '\0';
+    size_t  lidos = fread(buffer,1,len,fp);
 
-    /*fechar o arquivo.*/
-    fclose(fp);
+    if(lidos != len){
+        perror("ERRO: Erro ao ler o arquivo");
+        return 0;
+    }
+
+    return 1;
     
 }
 
 
-void compact_file(char *str, char *str_comp){
-    int count = 1,
-            i = 0,
-            j = 0;
-            
-    while(str[j] != '\0'){
-        count = 1;
+long compact_file(unsigned char *str, long len, unsigned char *str_comp, long max_out)
+{
+    size_t count = 1;
+    size_t i = 0; // posição no buffer de saída
+    size_t j = 0; // posição no buffer de entrada
 
-        while(str[j] == str[j+1]){
-            count += 1;
+    while (j < len) {
+
+        // Conta repetições
+        count = 1;
+        while ((j + 1 < len) && (str[j] == str[j + 1])) {
+            count++;
             j++;
         }
-        i += sprintf(&str_comp[i], "%d", count);
-        str_comp[i++]= str[j];
+
+        // Escrever o número (count)
+        int written = snprintf((char *)&str_comp[i], max_out - i, "%zu", count);
+
+        if (written < 0 || written >= (int)(max_out - i)) {
+            // overflow detectado
+            return -1;
+        }
+
+        i += written;
+
+        // Escrever o caractere repetido
+        if (i >= max_out - 1) {
+            return -1; // Sem espaço para o caractere
+        }
+
+        str_comp[i++] = str[j];
+
         j++;
     }
+
+    return i; // tamanho real do compactado
 }
 
-void write_file(char *str, long len){
+
+void write_file(unsigned char *str, long len){
     //codigo
 }
